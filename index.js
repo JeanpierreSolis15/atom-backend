@@ -26,21 +26,35 @@ try {
 const server = express();
 
 async function bootstrap() {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(server),
-  );
+  try {
+    console.log('Creating NestJS application...');
+    const app = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(server),
+    );
 
-  app.enableCors({
-    origin: true,
-    credentials: true,
-  });
+    console.log('Enabling CORS...');
+    app.enableCors({
+      origin: true,
+      credentials: true,
+    });
 
-  app.setGlobalPrefix('api');
+    console.log('Setting global prefix...');
+    app.setGlobalPrefix('api');
 
-  await app.init();
+    console.log('Initializing application...');
+    await app.init();
+
+    console.log('NestJS application initialized successfully');
+  } catch (error) {
+    console.error('Error during bootstrap:', error);
+    throw error;
+  }
 }
 
-bootstrap();
+bootstrap().catch(error => {
+  console.error('Failed to bootstrap application:', error);
+  process.exit(1);
+});
 
 exports.api = functions.https.onRequest(server); 

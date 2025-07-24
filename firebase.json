@@ -1,6 +1,6 @@
 {
   "functions": {
-    "source": "functions",
+    "source": ".",
     "runtime": "nodejs20",
     "codebase": "default",
     "ignore": [
@@ -9,13 +9,17 @@
       "firebase-debug.log",
       "firebase-debug.*.log",
       "coverage",
-      "dist",
       "test",
       "*.test.js",
       "*.spec.js",
       ".env",
       ".env.*",
-      "firebase-service-account.json"
+      "firebase-service-account.json",
+      "src",
+      "tsconfig.json",
+      "nest-cli.json",
+      "pnpm-workspace.yaml",
+      "functions"
     ]
   }
 } 

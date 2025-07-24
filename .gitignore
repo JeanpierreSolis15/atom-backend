@@ -53,10 +53,7 @@ firebase-service-account.json
 .firebase/
 .runtimeconfig.json
 
-# Cloud Functions
-functions/node_modules/
-functions/.env*
-functions/.env
+# Cloud Functions (no longer needed)
 
 
 
