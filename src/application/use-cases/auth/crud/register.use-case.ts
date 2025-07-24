@@ -1,9 +1,10 @@
-import { Injectable, Inject, ConflictException, Logger } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { IUserRepository } from '@domain/users/repositories/user.repository.interface';
 import { UserFactory } from '@domain/users/factories/user.factory';
 import { RegisterDto } from '@application/use-cases/auth/dtos/register.dto';
 import { User } from '@domain/users/entities/user.entity';
 import { Email } from '@domain/users/value-objects/email.vo';
+import { UserAlreadyExistsException } from '@domain/users/exceptions/user-already-exists.exception';
 export interface RegisterResponse {
   user: {
     id: string;
@@ -39,7 +40,9 @@ export class RegisterUseCase {
           email: dto.email,
           existingUserId: existingUser.id,
         });
-        throw new ConflictException('El usuario ya existe con este email');
+        throw new UserAlreadyExistsException(
+          'El usuario ya existe con este email',
+        );
       }
       this.logger.debug('Usuario no existe, procediendo con la creación');
       this.logger.debug('Creando usuario con UserFactory...');
@@ -47,7 +50,6 @@ export class RegisterUseCase {
         dto.email,
         dto.name,
         dto.lastName,
-        '', // Sin contraseña
       );
       this.logger.debug('Usuario creado correctamente con UserFactory');
       this.logger.debug('Guardando usuario en el repositorio...');

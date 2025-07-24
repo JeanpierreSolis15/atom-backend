@@ -8,8 +8,7 @@ export class User {
   readonly name: string;
   @ApiProperty({ description: 'Apellido del usuario' })
   readonly lastName: string;
-  @ApiProperty({ description: 'Hash de la contraseña' })
-  readonly passwordHash: string;
+
   @ApiProperty({ description: 'Fecha de creación' })
   readonly createdAt: Date;
   @ApiProperty({ description: 'Fecha de actualización' })
@@ -21,7 +20,6 @@ export class User {
     email: string,
     name: string,
     lastName: string,
-    passwordHash: string,
     createdAt: Date,
     updatedAt: Date,
     isActive: boolean = true,
@@ -30,7 +28,6 @@ export class User {
     this.email = email;
     this.name = name;
     this.lastName = lastName;
-    this.passwordHash = passwordHash;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.isActive = isActive;
@@ -44,7 +41,6 @@ export class User {
       this.email,
       this.name,
       this.lastName,
-      this.passwordHash,
       this.createdAt,
       new Date(),
       false,
@@ -56,7 +52,6 @@ export class User {
       this.email,
       this.name,
       this.lastName,
-      this.passwordHash,
       this.createdAt,
       new Date(),
       true,
@@ -68,7 +63,6 @@ export class User {
       this.email,
       name,
       lastName,
-      this.passwordHash,
       this.createdAt,
       new Date(),
       this.isActive,

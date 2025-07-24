@@ -11,7 +11,6 @@ describe('GetUserUseCase', () => {
     'test@example.com',
     'Test',
     'User',
-    'hashedPassword',
     new Date('2023-01-01'),
     new Date('2023-01-01'),
     true,
@@ -71,7 +70,6 @@ describe('GetUserUseCase', () => {
         'active@example.com',
         'Active',
         'User',
-        'hashedPassword',
         new Date('2023-01-01'),
         new Date('2023-01-01'),
         true,
@@ -81,7 +79,6 @@ describe('GetUserUseCase', () => {
         'inactive@example.com',
         'Inactive',
         'User',
-        'hashedPassword',
         new Date('2023-01-01'),
         new Date('2023-01-01'),
         false,
@@ -111,7 +108,6 @@ describe('GetUserUseCase', () => {
           email,
           'Test',
           'User',
-          'hashedPassword',
           new Date('2023-01-01'),
           new Date('2023-01-01'),
           true,
@@ -136,7 +132,6 @@ describe('GetUserUseCase', () => {
           'test@example.com',
           nameData.name,
           nameData.lastName,
-          'hashedPassword',
           new Date('2023-01-01'),
           new Date('2023-01-01'),
           true,
@@ -233,7 +228,6 @@ describe('GetUserUseCase', () => {
         'custom@example.com',
         'Custom',
         'User',
-        'customHashedPassword',
         new Date('2022-06-15'),
         new Date('2022-06-15'),
         false,
@@ -245,7 +239,6 @@ describe('GetUserUseCase', () => {
       expect(result.email).toBe('custom@example.com');
       expect(result.name).toBe('Custom');
       expect(result.lastName).toBe('User');
-      expect(result.passwordHash).toBe('customHashedPassword');
       expect(result.isActive).toBe(false);
       expect(result.createdAt).toEqual(new Date('2022-06-15'));
       expect(result.updatedAt).toEqual(new Date('2022-06-15'));
@@ -259,7 +252,6 @@ describe('GetUserUseCase', () => {
         'long@example.com',
         longName,
         longLastName,
-        'hashedPassword',
         new Date('2023-01-01'),
         new Date('2023-01-01'),
         true,
@@ -279,7 +271,6 @@ describe('GetUserUseCase', () => {
         'special@example.com',
         specialName,
         specialLastName,
-        'hashedPassword',
         new Date('2023-01-01'),
         new Date('2023-01-01'),
         true,
@@ -304,7 +295,6 @@ describe('GetUserUseCase', () => {
           email,
           'Test',
           'User',
-          'hashedPassword',
           new Date('2023-01-01'),
           new Date('2023-01-01'),
           true,

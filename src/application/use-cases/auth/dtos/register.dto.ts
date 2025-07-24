@@ -22,5 +22,4 @@ export class RegisterDto {
   @IsString({ message: 'El apellido debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El apellido es requerido' })
   readonly lastName: string;
-
 }

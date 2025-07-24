@@ -10,7 +10,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(0);
@@ -20,7 +19,6 @@ describe('RegisterDto', () => {
         email: 'invalid-email',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -31,7 +29,6 @@ describe('RegisterDto', () => {
         email: '',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -51,7 +48,6 @@ describe('RegisterDto', () => {
           email,
           name: 'John',
           lastName: 'Doe',
-          password: 'password123',
         });
         const errors = await validate(registerDto);
         expect(errors).toHaveLength(0);
@@ -64,7 +60,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(0);
@@ -74,7 +69,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: '',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -85,7 +79,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 123 as any,
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -109,7 +102,6 @@ describe('RegisterDto', () => {
           email: 'test@example.com',
           name,
           lastName: 'Doe',
-          password: 'password123',
         });
         const errors = await validate(registerDto);
         expect(errors).toHaveLength(0);
@@ -122,7 +114,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(0);
@@ -132,7 +123,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: '',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -145,7 +135,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 123 as any,
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(1);
@@ -169,7 +158,6 @@ describe('RegisterDto', () => {
           email: 'test@example.com',
           name: 'John',
           lastName,
-          password: 'password123',
         });
         const errors = await validate(registerDto);
         expect(errors).toHaveLength(0);
@@ -183,7 +171,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(0);
@@ -253,12 +240,10 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: 'John',
         lastName: 'Doe',
-        password: 'password123',
       });
       expect(registerDto).toHaveProperty('email');
       expect(registerDto).toHaveProperty('name');
       expect(registerDto).toHaveProperty('lastName');
-
     });
   });
   describe('casos edge', () => {
@@ -269,7 +254,6 @@ describe('RegisterDto', () => {
         email: 'test@example.com',
         name: longName,
         lastName: longLastName,
-        password: 'password123',
       });
       const errors = await validate(registerDto);
       expect(errors).toHaveLength(0);

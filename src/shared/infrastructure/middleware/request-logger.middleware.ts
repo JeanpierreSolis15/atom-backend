@@ -49,13 +49,7 @@ export class RequestLoggerMiddleware implements NestMiddleware {
       return body;
     }
     const sanitized = { ...body };
-    const sensitiveFields = [
-      'password',
-      'token',
-      'secret',
-      'key',
-      'authorization',
-    ];
+    const sensitiveFields = ['token', 'secret', 'key', 'authorization'];
     sensitiveFields.forEach((field) => {
       if (sanitized[field]) {
         sanitized[field] = '[REDACTED]';

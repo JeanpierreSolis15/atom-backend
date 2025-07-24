@@ -8,7 +8,6 @@ describe('LoginDto', () => {
     it('debería validar un email válido', async () => {
       const loginDto = createLoginDto({
         email: 'test@example.com',
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(0);
@@ -16,7 +15,6 @@ describe('LoginDto', () => {
     it('debería rechazar un email inválido', async () => {
       const loginDto = createLoginDto({
         email: 'invalid-email',
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(1);
@@ -25,16 +23,13 @@ describe('LoginDto', () => {
     it('debería rechazar un email vacío', async () => {
       const loginDto = createLoginDto({
         email: '',
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(1);
       expect(errors[0].constraints?.isNotEmpty).toBe('El email es requerido');
     });
     it('debería rechazar un email undefined', async () => {
-      const loginDto = createLoginDto({
-        password: 'password123',
-      });
+      const loginDto = createLoginDto({});
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(1);
       expect(errors[0].constraints?.isNotEmpty).toBe('El email es requerido');
@@ -42,7 +37,6 @@ describe('LoginDto', () => {
     it('debería rechazar un email null', async () => {
       const loginDto = createLoginDto({
         email: null as any,
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(1);
@@ -60,7 +54,6 @@ describe('LoginDto', () => {
       for (const email of validEmails) {
         const loginDto = createLoginDto({
           email,
-          password: 'password123',
         });
         const errors = await validate(loginDto);
         expect(errors).toHaveLength(0);
@@ -79,7 +72,6 @@ describe('LoginDto', () => {
       for (const email of invalidEmails) {
         const loginDto = createLoginDto({
           email,
-          password: 'password123',
         });
         const errors = await validate(loginDto);
         expect(errors.length).toBeGreaterThan(0);
@@ -91,7 +83,6 @@ describe('LoginDto', () => {
     it('debería validar un DTO completo válido', async () => {
       const loginDto = createLoginDto({
         email: 'test@example.com',
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(0);
@@ -137,17 +128,14 @@ describe('LoginDto', () => {
     it('debería tener las propiedades correctas', () => {
       const loginDto = createLoginDto({
         email: 'test@example.com',
-        password: 'password123',
       });
       expect(loginDto).toHaveProperty('email');
-
     });
   });
   describe('casos edge', () => {
     it('debería manejar emails con caracteres especiales', async () => {
       const loginDto = createLoginDto({
         email: 'user+tag@domain.com',
-        password: 'password123',
       });
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(0);
@@ -161,6 +149,5 @@ describe('LoginDto', () => {
       const errors = await validate(loginDto);
       expect(errors).toHaveLength(0);
     });
-
   });
 });

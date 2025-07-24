@@ -31,7 +31,6 @@ export class FirebaseUserRepository implements IUserRepository {
         email: data.email,
         name: data.name,
         lastName: data.lastName,
-        passwordHash: data.passwordHash,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
         isActive: data.isActive,
@@ -65,7 +64,6 @@ export class FirebaseUserRepository implements IUserRepository {
         email: data.email,
         name: data.name,
         lastName: data.lastName,
-        passwordHash: data.passwordHash,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
         isActive: data.isActive,
@@ -95,7 +93,7 @@ export class FirebaseUserRepository implements IUserRepository {
       };
 
       const cleanUserData = Object.fromEntries(
-        Object.entries(userData).filter(([_, value]) => value !== undefined)
+        Object.entries(userData).filter(([_, value]) => value !== undefined),
       );
       this.logger.debug('Datos del usuario a guardar', {
         userId: user.id,
@@ -131,7 +129,6 @@ export class FirebaseUserRepository implements IUserRepository {
         isActive: user.isActive,
       };
 
-      // Filtrar campos undefined y null para evitar errores de Firestore
       const cleanUserData = Object.fromEntries(
         Object.entries(userData).filter(([key, value]) => {
           if (value === undefined || value === null) {
@@ -192,7 +189,6 @@ export class FirebaseUserRepository implements IUserRepository {
           email: data.email,
           name: data.name,
           lastName: data.lastName,
-          passwordHash: data.passwordHash,
           createdAt: data.createdAt.toDate(),
           updatedAt: data.updatedAt.toDate(),
           isActive: data.isActive,
