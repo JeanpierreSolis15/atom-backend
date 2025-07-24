@@ -11,7 +11,7 @@ export class UserFactory {
     email: string,
     name: string,
     lastName: string,
-    password: string,
+    password?: string,
   ): Promise<User> {
     this.logger.debug('Creando nuevo usuario con UserFactory', {
       email,

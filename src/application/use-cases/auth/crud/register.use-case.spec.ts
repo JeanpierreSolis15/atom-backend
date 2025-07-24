@@ -69,7 +69,6 @@ describe('RegisterUseCase', () => {
         mockRegisterDto.email,
         mockRegisterDto.name,
         mockRegisterDto.lastName,
-        '', // Sin contraseña
       );
       expect(userRepository.save).toHaveBeenCalledWith(mockUser);
     });
@@ -137,7 +136,6 @@ describe('RegisterUseCase', () => {
         mockRegisterDto.email,
         mockRegisterDto.name,
         mockRegisterDto.lastName,
-        mockRegisterDto.password,
       );
       expect(userRepository.save).not.toHaveBeenCalled();
     });
@@ -155,7 +153,6 @@ describe('RegisterUseCase', () => {
         mockRegisterDto.email,
         mockRegisterDto.name,
         mockRegisterDto.lastName,
-        mockRegisterDto.password,
       );
       expect(userRepository.save).toHaveBeenCalledWith(mockUser);
     });

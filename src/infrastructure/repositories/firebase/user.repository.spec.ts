@@ -179,7 +179,6 @@ describe('FirebaseUserRepository', () => {
         email: mockUser.email,
         name: mockUser.name,
         lastName: mockUser.lastName,
-        passwordHash: mockUser.passwordHash,
         createdAt: mockUser.createdAt,
         updatedAt: mockUser.updatedAt,
         isActive: mockUser.isActive,

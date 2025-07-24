@@ -124,6 +124,33 @@ describe('UserFactory', () => {
       expect(user.passwordHash).toBeDefined();
       expect(user.passwordHash).not.toBe('123');
     });
+    it('debería crear usuario sin contraseña', async () => {
+      const user = await userFactory.create(
+        'test@example.com',
+        'John',
+        'Doe',
+      );
+      expect(user).toBeInstanceOf(User);
+      expect(user.email).toBe('test@example.com');
+      expect(user.name).toBe('John');
+      expect(user.lastName).toBe('Doe');
+      expect(user.passwordHash).toBe('');
+      expect(user.id).toBeDefined();
+      expect(user.id).toHaveLength(36);
+      expect(user.createdAt).toBeInstanceOf(Date);
+      expect(user.updatedAt).toBeInstanceOf(Date);
+      expect(user.isActive).toBe(true);
+    });
+    it('debería crear usuario con contraseña vacía', async () => {
+      const user = await userFactory.create(
+        'test@example.com',
+        'John',
+        'Doe',
+        '',
+      );
+      expect(user).toBeInstanceOf(User);
+      expect(user.passwordHash).toBe('');
+    });
   });
   describe('createFromData', () => {
     it('debería crear un usuario desde datos existentes', () => {

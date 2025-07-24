@@ -122,10 +122,8 @@ describe('LoginUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(
         expect.any(Email),
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        mockLoginDto.password,
-        mockUser.passwordHash,
-      );
+      // Sin validación de contraseña
+      expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(jwtService.sign).not.toHaveBeenCalled();
     });
     it('debería lanzar UnauthorizedException cuando el usuario está inactivo', async () => {
@@ -150,10 +148,8 @@ describe('LoginUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(
         expect.any(Email),
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        mockLoginDto.password,
-        inactiveUser.passwordHash,
-      );
+      // Sin validación de contraseña
+      expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(jwtService.sign).not.toHaveBeenCalled();
     });
     it('debería manejar diferentes formatos de email', async () => {
@@ -203,10 +199,8 @@ describe('LoginUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(
         expect.any(Email),
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        mockLoginDto.password,
-        mockUser.passwordHash,
-      );
+      // Sin validación de contraseña
+      expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(jwtService.sign).not.toHaveBeenCalled();
     });
     it('debería manejar errores del JWT service', async () => {
@@ -221,10 +215,8 @@ describe('LoginUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(
         expect.any(Email),
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        mockLoginDto.password,
-        mockUser.passwordHash,
-      );
+      // Sin validación de contraseña
+      expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(jwtService.sign).toHaveBeenCalled();
     });
     it('debería validar que el email se convierte correctamente a Email VO', async () => {
