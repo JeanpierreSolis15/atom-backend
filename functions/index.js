@@ -10,9 +10,16 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 let AppModule;
 try {
+  console.log('Loading AppModule from ./dist/app.module');
   AppModule = require('./dist/app.module').AppModule;
+  console.log('AppModule loaded successfully');
 } catch (error) {
   console.error('Error loading AppModule:', error);
+  console.error('Current directory:', process.cwd());
+  console.error('Files in current directory:', require('fs').readdirSync('.'));
+  if (require('fs').existsSync('./dist')) {
+    console.error('Files in dist directory:', require('fs').readdirSync('./dist'));
+  }
   throw error;
 }
 
