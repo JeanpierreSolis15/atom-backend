@@ -62,8 +62,8 @@ jobs:
     - name: Install dependencies
       run: pnpm install
       
-    - name: Build application
-      run: pnpm run build
+    - name: Build application for Firebase Functions
+      run: pnpm run build:functions
       
     - name: Setup environment variables
       run: |
