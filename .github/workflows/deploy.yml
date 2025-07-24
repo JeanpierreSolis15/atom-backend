@@ -75,7 +75,7 @@ jobs:
       
     - name: Setup environment variables
       run: |
-        echo "FIREBASE_PROJECT_ID=atom-cddbd" >> functions/.env
+        echo "PROJECT_ID=atom-cddbd" >> functions/.env
         echo "NODE_ENV=production" >> functions/.env
         echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> functions/.env
         echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> functions/.env
@@ -88,5 +88,5 @@ jobs:
         firebase deploy --only functions --token "${{ secrets.FIREBASE_TOKEN }}"
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        FIREBASE_PROJECT_ID: atom-cddbd
+        PROJECT_ID: atom-cddbd
         NODE_ENV: production 

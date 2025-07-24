@@ -21,15 +21,21 @@ export class FirebaseService {
     this.logger.log('Inicializando Firebase...');
     try {
       if (!admin.apps.length) {
-        const projectId = this.configService.get<string>('FIREBASE_PROJECT_ID');
+        const projectId =
+          this.configService.get<string>('PROJECT_ID') ||
+          this.configService.get<string>('FIREBASE_PROJECT_ID');
         if (!projectId) {
-          this.logger.error('FIREBASE_PROJECT_ID no está configurado');
-          throw new Error('FIREBASE_PROJECT_ID no está configurado');
+          this.logger.error(
+            'PROJECT_ID o FIREBASE_PROJECT_ID no está configurado',
+          );
+          throw new Error(
+            'PROJECT_ID o FIREBASE_PROJECT_ID no está configurado',
+          );
         }
         this.logger.debug(`Proyecto Firebase: ${projectId}`);
-        const serviceAccountPath = this.configService.get<string>(
-          'FIREBASE_SERVICE_ACCOUNT_PATH',
-        );
+        const serviceAccountPath =
+          this.configService.get<string>('SERVICE_ACCOUNT_PATH') ||
+          this.configService.get<string>('FIREBASE_SERVICE_ACCOUNT_PATH');
         if (serviceAccountPath) {
           this.logger.debug(
             `Usando archivo de servicio: ${serviceAccountPath}`,
@@ -43,23 +49,42 @@ export class FirebaseService {
           });
           this.logger.log('Firebase inicializado con archivo de servicio');
         } else {
-          this.logger.debug('Usando variable de entorno para credenciales');
-          const serviceAccountJson = this.configService.get<string>(
-            'FIREBASE_SERVICE_ACCOUNT',
-          );
-          if (!serviceAccountJson) {
-            this.logger.error(
-              'FIREBASE_SERVICE_ACCOUNT_PATH o FIREBASE_SERVICE_ACCOUNT debe estar configurado',
+          const nodeEnv =
+            this.configService.get<string>('NODE_ENV') || 'development';
+
+          if (nodeEnv === 'production') {
+            this.logger.debug(
+              'Usando credenciales por defecto de Firebase Functions',
             );
-            throw new Error(
-              'FIREBASE_SERVICE_ACCOUNT_PATH o FIREBASE_SERVICE_ACCOUNT debe estar configurado',
+            admin.initializeApp({
+              projectId,
+            });
+            this.logger.log(
+              'Firebase inicializado con credenciales por defecto',
+            );
+          } else {
+            this.logger.debug(
+              'Usando variable de entorno para credenciales (desarrollo)',
+            );
+            const serviceAccountJson =
+              this.configService.get<string>('SERVICE_ACCOUNT') ||
+              this.configService.get<string>('FIREBASE_SERVICE_ACCOUNT');
+            if (!serviceAccountJson) {
+              this.logger.error(
+                'SERVICE_ACCOUNT_PATH o SERVICE_ACCOUNT debe estar configurado para desarrollo',
+              );
+              throw new Error(
+                'SERVICE_ACCOUNT_PATH o SERVICE_ACCOUNT debe estar configurado para desarrollo',
+              );
+            }
+            admin.initializeApp({
+              credential: admin.credential.cert(JSON.parse(serviceAccountJson)),
+              projectId,
+            });
+            this.logger.log(
+              'Firebase inicializado con variable de entorno (desarrollo)',
             );
           }
-          admin.initializeApp({
-            credential: admin.credential.cert(JSON.parse(serviceAccountJson)),
-            projectId,
-          });
-          this.logger.log('Firebase inicializado con variable de entorno');
         }
       } else {
         this.logger.debug('Firebase ya está inicializado');
