@@ -65,25 +65,14 @@ jobs:
     - name: Build application
       run: pnpm run build
       
-    - name: Install functions dependencies
-      run: |
-        cd functions
-        npm install
-        
-    - name: Copy build files to functions
-      run: |
-        cp -r dist functions/
-        ls -la functions/
-        ls -la functions/dist/
-      
     - name: Setup environment variables
       run: |
-        echo "PROJECT_ID=atom-cddbd" >> functions/.env
-        echo "NODE_ENV=production" >> functions/.env
-        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> functions/.env
-        echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> functions/.env
-        echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> functions/.env
-        echo "JWT_REFRESH_EXPIRES_IN=${{ secrets.JWT_REFRESH_EXPIRES_IN }}" >> functions/.env
+        echo "PROJECT_ID=atom-cddbd" >> .env
+        echo "NODE_ENV=production" >> .env
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+        echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> .env
+        echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> .env
+        echo "JWT_REFRESH_EXPIRES_IN=${{ secrets.JWT_REFRESH_EXPIRES_IN }}" >> .env
       
     - name: Install Firebase CLI
       run: pnpm add -g firebase-tools
