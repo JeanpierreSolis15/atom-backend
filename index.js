@@ -25,6 +25,15 @@ try {
 
 const server = express();
 
+// Endpoint de prueba simple
+server.get('/test', (req, res) => {
+  res.json({ 
+    message: 'API funcionando correctamente',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 async function bootstrap() {
   try {
     console.log('Creating NestJS application...');
@@ -35,7 +44,9 @@ async function bootstrap() {
 
     console.log('Enabling CORS...');
     app.enableCors({
-      origin: true,
+      origin: ['*', 'http://localhost:3000', 'https://api-hptdammiqq-uc.a.run.app'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
       credentials: true,
     });
 
@@ -57,4 +68,7 @@ bootstrap().catch(error => {
   process.exit(1);
 });
 
-exports.api = onRequest(server); 
+exports.api = onRequest({
+  cors: true,
+  maxInstances: 10,
+}, server); 
