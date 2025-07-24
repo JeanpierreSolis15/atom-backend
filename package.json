@@ -21,7 +21,8 @@
     "deploy:functions": "npm run build && firebase deploy --only functions",
     "deploy:functions:prod": "npm run build && firebase deploy --only functions --project production",
     "firebase:login": "firebase login",
-    "firebase:init": "firebase init functions"
+    "firebase:init": "firebase init functions",
+    "functions:start": "functions-framework --target=api"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -38,6 +39,7 @@
     "bcryptjs": "^2.4.3",
     "firebase-admin": "^11.10.0",
     "firebase-functions": "^4.3.1",
+    "@google-cloud/functions-framework": "^3.0.0",
     "class-validator": "^0.14.0",
     "class-transformer": "^0.5.1",
     "reflect-metadata": "^0.1.13",
