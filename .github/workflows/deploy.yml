@@ -63,7 +63,19 @@ jobs:
       run: pnpm install
       
     - name: Build application for Firebase Functions
-      run: pnpm run build:functions
+      run: |
+        pnpm run build
+        cp -r dist/* .
+        cp package.json .
+      
+    - name: Debug - List files before deployment
+      run: |
+        echo "=== Files in root directory ==="
+        ls -la
+        echo "=== Files in dist directory ==="
+        ls -la dist/
+        echo "=== App module exists ==="
+        ls -la app.module.*
       
     - name: Setup environment variables
       run: |
