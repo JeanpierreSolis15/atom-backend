@@ -1,6 +1,6 @@
 {
   "functions": {
-    "source": ".",
+    "source": "functions",
     "runtime": "nodejs18",
     "codebase": "default",
     "ignore": [
