@@ -50,6 +50,12 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 firebase-service-account.json
+.firebase/
+.runtimeconfig.json
+
+# Cloud Functions
+functions/node_modules/
+functions/.env*
 
 # Temporary folders
 tmp/
