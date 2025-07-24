@@ -71,4 +71,5 @@ bootstrap().catch(error => {
 exports.api = onRequest({
   cors: true,
   maxInstances: 10,
+  allowUnauthenticated: true,
 }, server); 
