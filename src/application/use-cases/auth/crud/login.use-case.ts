@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Inject, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUserRepository } from '@domain/users/repositories/user.repository.interface';
 import { Email } from '@domain/users/value-objects/email.vo';
@@ -16,6 +16,7 @@ export interface LoginResponse {
 }
 @Injectable()
 export class LoginUseCase {
+  private readonly logger = new Logger(LoginUseCase.name);
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
@@ -27,13 +28,8 @@ export class LoginUseCase {
     if (!user) {
       throw new UnauthorizedException('Credenciales inválidas');
     }
-    const isPasswordValid = await bcrypt.compare(
-      dto.password,
-      user.passwordHash,
-    );
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Credenciales inválidas');
-    }
+    // Sin validación de contraseña
+    this.logger.debug('Login sin validación de contraseña');
     if (!user.isActive) {
       throw new UnauthorizedException('Usuario inactivo');
     }

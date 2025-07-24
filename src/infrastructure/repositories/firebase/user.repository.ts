@@ -89,13 +89,11 @@ export class FirebaseUserRepository implements IUserRepository {
         email: user.email,
         name: user.name,
         lastName: user.lastName,
-        passwordHash: user.passwordHash,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         isActive: user.isActive,
       };
 
-      // Filtrar campos undefined para evitar errores de Firestore
       const cleanUserData = Object.fromEntries(
         Object.entries(userData).filter(([_, value]) => value !== undefined)
       );
@@ -133,9 +131,17 @@ export class FirebaseUserRepository implements IUserRepository {
         isActive: user.isActive,
       };
 
-      // Filtrar campos undefined para evitar errores de Firestore
+      // Filtrar campos undefined y null para evitar errores de Firestore
       const cleanUserData = Object.fromEntries(
-        Object.entries(userData).filter(([_, value]) => value !== undefined)
+        Object.entries(userData).filter(([key, value]) => {
+          if (value === undefined || value === null) {
+            this.logger.warn(
+              `Campo ${key} es ${value}, será excluido del guardado`,
+            );
+            return false;
+          }
+          return true;
+        }),
       );
 
       await this.firebaseService

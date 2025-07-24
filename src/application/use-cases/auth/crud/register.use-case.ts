@@ -31,11 +31,7 @@ export class RegisterUseCase {
       this.logger.debug('Validando email...');
       const emailVO = new Email(dto.email);
       this.logger.debug('Email validado correctamente');
-      this.logger.debug('Validando contraseña...');
-      if (!dto.password || dto.password.length < 6) {
-        throw new Error('La contraseña debe tener al menos 6 caracteres');
-      }
-      this.logger.debug('Contraseña validada correctamente');
+
       this.logger.debug('Verificando si el usuario ya existe...');
       const existingUser = await this.userRepository.findByEmail(emailVO);
       if (existingUser) {
@@ -51,7 +47,7 @@ export class RegisterUseCase {
         dto.email,
         dto.name,
         dto.lastName,
-        dto.password,
+        '', // Sin contraseña
       );
       this.logger.debug('Usuario creado correctamente con UserFactory');
       this.logger.debug('Guardando usuario en el repositorio...');

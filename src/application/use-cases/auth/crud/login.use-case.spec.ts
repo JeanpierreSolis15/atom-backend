@@ -23,7 +23,6 @@ describe('LoginUseCase', () => {
   );
   const mockLoginDto = {
     email: 'test@example.com',
-    password: 'password123',
   };
   const mockJwtPayload = {
     sub: mockUser.id,
@@ -85,10 +84,8 @@ describe('LoginUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(
         expect.any(Email),
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(
-        mockLoginDto.password,
-        mockUser.passwordHash,
-      );
+      // Sin validación de contraseña
+      expect(bcrypt.compare).not.toHaveBeenCalled();
       expect(jwtService.sign).toHaveBeenCalledTimes(2);
       expect(jwtService.sign).toHaveBeenNthCalledWith(1, mockJwtPayload, {
         secret: 'test-jwt-secret',

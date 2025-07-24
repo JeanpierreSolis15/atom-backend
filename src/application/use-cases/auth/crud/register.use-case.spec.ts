@@ -24,7 +24,6 @@ describe('RegisterUseCase', () => {
     email: 'test@example.com',
     name: 'John',
     lastName: 'Doe',
-    password: 'password123',
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -70,7 +69,7 @@ describe('RegisterUseCase', () => {
         mockRegisterDto.email,
         mockRegisterDto.name,
         mockRegisterDto.lastName,
-        mockRegisterDto.password,
+        '', // Sin contraseña
       );
       expect(userRepository.save).toHaveBeenCalledWith(mockUser);
     });

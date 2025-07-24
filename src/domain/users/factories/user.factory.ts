@@ -21,9 +21,9 @@ export class UserFactory {
     try {
       const emailVO = new Email(email);
       this.logger.debug('Email validado correctamente');
-      this.logger.debug('Hasheando contraseña...');
-      const hashedPassword = await bcrypt.hash(password, 10);
-      this.logger.debug('Contraseña hasheada correctamente');
+      this.logger.debug('Procesando contraseña...');
+      const hashedPassword = password ? await bcrypt.hash(password, 10) : '';
+      this.logger.debug('Contraseña procesada correctamente');
       const passwordVO = new Password(hashedPassword, true);
       this.logger.debug('Password VO creado correctamente');
       const now = new Date();
