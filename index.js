@@ -10,8 +10,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 let AppModule;
 try {
-  console.log('Loading AppModule from ./dist/app.module');
-  AppModule = require('./dist/app.module').AppModule;
+  console.log('Loading AppModule from ./app.module');
+  AppModule = require('./app.module').AppModule;
   console.log('AppModule loaded successfully');
 } catch (error) {
   console.error('Error loading AppModule:', error);
