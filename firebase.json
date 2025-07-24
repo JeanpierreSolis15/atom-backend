@@ -1,0 +1,21 @@
+{
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs18",
+    "codebase": "default",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "coverage",
+      "dist",
+      "test",
+      "*.test.js",
+      "*.spec.js",
+      ".env",
+      ".env.*",
+      "firebase-service-account.json"
+    ]
+  }
+} 

@@ -143,6 +143,27 @@ Authorization: Bearer <jwt-token>
 
 Acceder a Swagger UI: `http://localhost:3000/api`
 
+## 🚀 Despliegue
+
+El proyecto está configurado para despliegue automático en Firebase Cloud Functions.
+
+### Despliegue Automático
+- **Rama `develop`**: Desarrollo y testing
+- **Rama `master`**: Despliegue automático a producción
+
+### Despliegue Manual
+```bash
+# Despliegue a Firebase Cloud Functions
+pnpm run deploy:functions
+```
+
+### URL de Producción
+```
+WAIT - NO URL
+```
+
+📖 **Ver documentación completa**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+
 ## Comandos
 
 ```bash
@@ -159,6 +180,10 @@ pnpm run lint:fix
 
 # Formateo
 pnpm run format
+
+# Despliegue Firebase
+pnpm run deploy:functions
+pnpm run deploy:functions:prod
 ```
 
 ## Características Implementadas

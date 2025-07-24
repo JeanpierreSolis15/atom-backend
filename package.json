@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "deploy:functions": "npm run build && firebase deploy --only functions",
+    "deploy:functions:prod": "npm run build && firebase deploy --only functions --project production",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init functions"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -56,6 +60,7 @@
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "firebase-tools": "^13.0.0",
     "jest": "^29.5.0",
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
