@@ -20,14 +20,14 @@ async function bootstrap() {
     AppModule,
     new ExpressAdapter(server),
   );
-  
+
   app.enableCors({
     origin: true,
     credentials: true,
   });
-  
+
   app.setGlobalPrefix('api');
-  
+
   await app.init();
 }
 

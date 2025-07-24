@@ -57,8 +57,7 @@ firebase-service-account.json
 functions/node_modules/
 functions/.env*
 
-# ESLint
-.eslintrc.js
+
 
 # Temporary folders
 tmp/
