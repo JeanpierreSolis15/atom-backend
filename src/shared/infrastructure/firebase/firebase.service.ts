@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import * as path from 'path';
+import * as fs from 'fs';
 @Injectable()
 export class FirebaseService {
   private static instance: FirebaseService;
@@ -33,7 +34,9 @@ export class FirebaseService {
           this.logger.debug(
             `Usando archivo de servicio: ${serviceAccountPath}`,
           );
-          const serviceAccount = require(path.resolve(serviceAccountPath));
+          const serviceAccount = JSON.parse(
+            fs.readFileSync(path.resolve(serviceAccountPath), 'utf8'),
+          );
           admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
             projectId,
