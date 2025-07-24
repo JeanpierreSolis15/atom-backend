@@ -65,6 +65,14 @@ jobs:
     - name: Build application
       run: pnpm run build
       
+    - name: Install functions dependencies
+      run: |
+        cd functions
+        npm install
+        
+    - name: Copy build files to functions
+      run: cp -r dist functions/
+      
     - name: Install Firebase CLI
       run: pnpm add -g firebase-tools
       
