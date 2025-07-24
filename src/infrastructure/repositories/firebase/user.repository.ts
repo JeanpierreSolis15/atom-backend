@@ -94,22 +94,20 @@ export class FirebaseUserRepository implements IUserRepository {
         updatedAt: user.updatedAt,
         isActive: user.isActive,
       };
+
+      // Filtrar campos undefined para evitar errores de Firestore
+      const cleanUserData = Object.fromEntries(
+        Object.entries(userData).filter(([_, value]) => value !== undefined)
+      );
       this.logger.debug('Datos del usuario a guardar', {
         userId: user.id,
-        userData: {
-          email: userData.email,
-          name: userData.name,
-          lastName: userData.lastName,
-          createdAt: userData.createdAt,
-          updatedAt: userData.updatedAt,
-          isActive: userData.isActive,
-        },
+        userData: cleanUserData,
       });
       await this.firebaseService
         .getFirestore()
         .collection(this.collectionName)
         .doc(user.id)
-        .set(userData);
+        .set(cleanUserData);
       this.logger.log(`Usuario guardado exitosamente: ${user.id}`);
       return user;
     } catch (error) {
@@ -134,11 +132,17 @@ export class FirebaseUserRepository implements IUserRepository {
         updatedAt: user.updatedAt,
         isActive: user.isActive,
       };
+
+      // Filtrar campos undefined para evitar errores de Firestore
+      const cleanUserData = Object.fromEntries(
+        Object.entries(userData).filter(([_, value]) => value !== undefined)
+      );
+
       await this.firebaseService
         .getFirestore()
         .collection(this.collectionName)
         .doc(user.id)
-        .update(userData);
+        .update(cleanUserData);
       this.logger.log(`Usuario actualizado exitosamente: ${user.id}`);
       return user;
     } catch (error) {
