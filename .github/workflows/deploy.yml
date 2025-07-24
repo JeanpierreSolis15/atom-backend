@@ -81,7 +81,6 @@ jobs:
         echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> functions/.env
         echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> functions/.env
         echo "JWT_REFRESH_EXPIRES_IN=${{ secrets.JWT_REFRESH_EXPIRES_IN }}" >> functions/.env
-        echo "FIREBASE_SERVICE_ACCOUNT=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" >> functions/.env
       
     - name: Install Firebase CLI
       run: pnpm add -g firebase-tools
