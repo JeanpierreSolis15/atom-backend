@@ -11,13 +11,30 @@ module.exports = [
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        project: './tsconfig.json',
-        tsconfigRootDir: __dirname,
         sourceType: 'module',
       },
       globals: {
+        console: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        global: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        
+        describe: 'readonly',
+        test: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        jest: 'readonly',
+        
         node: true,
-        jest: true,
       },
     },
     plugins: {
@@ -32,7 +49,14 @@ module.exports = [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      'prettier/prettier': 'error',
+      'prettier/prettier': ['error', {
+        endOfLine: 'lf',
+        singleQuote: true,
+        trailingComma: 'all',
+        printWidth: 80,
+        tabWidth: 2,
+        semi: true,
+      }],
     },
   },
   {
