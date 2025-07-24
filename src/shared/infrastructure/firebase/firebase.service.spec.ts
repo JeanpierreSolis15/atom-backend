@@ -56,15 +56,20 @@ describe('FirebaseService', () => {
     beforeEach(() => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return JSON.stringify({
               type: 'service_account',
               project_id: 'test-project-id',
             });
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -116,10 +121,14 @@ describe('FirebaseService', () => {
     });
     it('debería inicializar Firebase con variable de entorno cuando no hay archivo de servicio', () => {
       const service = FirebaseService.getInstance(configService);
+      expect(configService.get).toHaveBeenCalledWith('PROJECT_ID');
       expect(configService.get).toHaveBeenCalledWith('FIREBASE_PROJECT_ID');
+      expect(configService.get).toHaveBeenCalledWith('SERVICE_ACCOUNT_PATH');
       expect(configService.get).toHaveBeenCalledWith(
         'FIREBASE_SERVICE_ACCOUNT_PATH',
       );
+      expect(configService.get).toHaveBeenCalledWith('NODE_ENV');
+      expect(configService.get).toHaveBeenCalledWith('SERVICE_ACCOUNT');
       expect(configService.get).toHaveBeenCalledWith(
         'FIREBASE_SERVICE_ACCOUNT',
       );
@@ -131,38 +140,48 @@ describe('FirebaseService', () => {
     it('debería inicializar Firebase con archivo de servicio cuando está disponible', () => {
       expect(true).toBe(true);
     });
-    it('debería lanzar error cuando FIREBASE_PROJECT_ID no está configurado', () => {
+    it('debería lanzar error cuando PROJECT_ID no está configurado', () => {
       mockConfigService.get.mockReturnValue(undefined);
       expect(() => FirebaseService.getInstance(configService)).toThrow(
-        'FIREBASE_PROJECT_ID no está configurado',
+        'PROJECT_ID o FIREBASE_PROJECT_ID no está configurado',
       );
     });
-    it('debería lanzar error cuando no hay credenciales configuradas', () => {
+    it('debería lanzar error cuando no hay credenciales configuradas en desarrollo', () => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return undefined;
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
       });
       expect(() => FirebaseService.getInstance(configService)).toThrow(
-        'FIREBASE_SERVICE_ACCOUNT_PATH o FIREBASE_SERVICE_ACCOUNT debe estar configurado',
+        'SERVICE_ACCOUNT_PATH o SERVICE_ACCOUNT debe estar configurado para desarrollo',
       );
     });
-    it('debería lanzar error cuando FIREBASE_SERVICE_ACCOUNT es JSON inválido', () => {
+    it('debería lanzar error cuando SERVICE_ACCOUNT es JSON inválido', () => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return 'invalid-json';
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -172,12 +191,17 @@ describe('FirebaseService', () => {
     it('debería manejar errores durante la inicialización', () => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             throw new Error('Config error');
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -185,6 +209,30 @@ describe('FirebaseService', () => {
       expect(() => FirebaseService.getInstance(configService)).toThrow(
         'Config error',
       );
+    });
+
+    it('debería usar credenciales por defecto en producción', () => {
+      mockConfigService.get.mockImplementation((key: string) => {
+        switch (key) {
+          case 'PROJECT_ID':
+          case 'FIREBASE_PROJECT_ID':
+            return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
+          case 'FIREBASE_SERVICE_ACCOUNT_PATH':
+            return undefined;
+          case 'SERVICE_ACCOUNT':
+          case 'FIREBASE_SERVICE_ACCOUNT':
+            return undefined;
+          case 'NODE_ENV':
+            return 'production';
+          default:
+            return undefined;
+        }
+      });
+      const service = FirebaseService.getInstance(configService);
+      expect(admin.initializeApp).toHaveBeenCalledWith({
+        projectId: 'test-project-id',
+      });
     });
     it('debería no reinicializar Firebase si ya está inicializado', () => {
       (admin.apps as any) = [{ name: 'default' }];
@@ -196,15 +244,20 @@ describe('FirebaseService', () => {
     beforeEach(() => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return JSON.stringify({
               type: 'service_account',
               project_id: 'test-project-id',
             });
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -236,15 +289,20 @@ describe('FirebaseService', () => {
     beforeEach(() => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return JSON.stringify({
               type: 'service_account',
               project_id: 'test-project-id',
             });
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -373,12 +431,17 @@ describe('FirebaseService', () => {
       for (const error of errorTypes) {
         mockConfigService.get.mockImplementation((key: string) => {
           switch (key) {
+            case 'PROJECT_ID':
             case 'FIREBASE_PROJECT_ID':
               return 'test-project-id';
+            case 'SERVICE_ACCOUNT_PATH':
             case 'FIREBASE_SERVICE_ACCOUNT_PATH':
               return undefined;
+            case 'SERVICE_ACCOUNT':
             case 'FIREBASE_SERVICE_ACCOUNT':
               throw error;
+            case 'NODE_ENV':
+              return 'development';
             default:
               return undefined;
           }
@@ -390,24 +453,31 @@ describe('FirebaseService', () => {
     });
     it('debería manejar errores de configuración faltante', () => {
       const missingConfigs = [
-        { FIREBASE_PROJECT_ID: undefined },
+        { PROJECT_ID: undefined, FIREBASE_PROJECT_ID: undefined },
         {
+          PROJECT_ID: 'test-project',
           FIREBASE_PROJECT_ID: 'test-project',
+          SERVICE_ACCOUNT: undefined,
           FIREBASE_SERVICE_ACCOUNT: undefined,
+          SERVICE_ACCOUNT_PATH: undefined,
           FIREBASE_SERVICE_ACCOUNT_PATH: undefined,
+          NODE_ENV: 'development',
         },
       ];
       for (const config of missingConfigs) {
         mockConfigService.get.mockImplementation(
           (key: string) => config[key as keyof typeof config],
         );
-        if (config.FIREBASE_PROJECT_ID === undefined) {
+        if (
+          config.PROJECT_ID === undefined &&
+          config.FIREBASE_PROJECT_ID === undefined
+        ) {
           expect(() => FirebaseService.getInstance(configService)).toThrow(
-            'FIREBASE_PROJECT_ID no está configurado',
+            'PROJECT_ID o FIREBASE_PROJECT_ID no está configurado',
           );
         } else {
           expect(() => FirebaseService.getInstance(configService)).toThrow(
-            'FIREBASE_SERVICE_ACCOUNT_PATH o FIREBASE_SERVICE_ACCOUNT debe estar configurado',
+            'SERVICE_ACCOUNT_PATH o SERVICE_ACCOUNT debe estar configurado para desarrollo',
           );
         }
       }
@@ -417,15 +487,20 @@ describe('FirebaseService', () => {
     it('debería mantener una única instancia global', () => {
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return JSON.stringify({
               type: 'service_account',
               project_id: 'test-project-id',
             });
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
@@ -441,15 +516,20 @@ describe('FirebaseService', () => {
       (FirebaseService as any).instance = undefined;
       mockConfigService.get.mockImplementation((key: string) => {
         switch (key) {
+          case 'PROJECT_ID':
           case 'FIREBASE_PROJECT_ID':
             return 'test-project-id';
+          case 'SERVICE_ACCOUNT_PATH':
           case 'FIREBASE_SERVICE_ACCOUNT_PATH':
             return undefined;
+          case 'SERVICE_ACCOUNT':
           case 'FIREBASE_SERVICE_ACCOUNT':
             return JSON.stringify({
               type: 'service_account',
               project_id: 'test-project-id',
             });
+          case 'NODE_ENV':
+            return 'development';
           default:
             return undefined;
         }
