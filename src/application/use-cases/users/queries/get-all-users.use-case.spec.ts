@@ -11,7 +11,6 @@ describe('GetAllUsersUseCase', () => {
       email: 'user1@example.com',
       name: 'John',
       lastName: 'Doe',
-      passwordHash: 'hashed-password-1',
       createdAt: new Date('2023-01-01'),
       updatedAt: new Date('2023-01-01'),
       isActive: true,
@@ -21,7 +20,6 @@ describe('GetAllUsersUseCase', () => {
       email: 'user2@example.com',
       name: 'Jane',
       lastName: 'Smith',
-      passwordHash: 'hashed-password-2',
       createdAt: new Date('2023-01-02'),
       updatedAt: new Date('2023-01-02'),
       isActive: true,
@@ -31,7 +29,6 @@ describe('GetAllUsersUseCase', () => {
       email: 'user3@example.com',
       name: 'Bob',
       lastName: 'Johnson',
-      passwordHash: 'hashed-password-3',
       createdAt: new Date('2023-01-03'),
       updatedAt: new Date('2023-01-03'),
       isActive: false,
@@ -239,7 +236,6 @@ describe('GetAllUsersUseCase', () => {
         expect(user).toHaveProperty('email');
         expect(user).toHaveProperty('name');
         expect(user).toHaveProperty('lastName');
-        expect(user).toHaveProperty('passwordHash');
         expect(user).toHaveProperty('createdAt');
         expect(user).toHaveProperty('updatedAt');
         expect(user).toHaveProperty('isActive');

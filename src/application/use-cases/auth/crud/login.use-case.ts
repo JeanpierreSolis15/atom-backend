@@ -1,9 +1,9 @@
-import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUserRepository } from '@domain/users/repositories/user.repository.interface';
 import { Email } from '@domain/users/value-objects/email.vo';
 import { LoginDto } from '@application/use-cases/auth/dtos/login.dto';
-import * as bcrypt from 'bcryptjs';
+import { UserNotFoundException } from '@domain/users/exceptions/user-not-found.exception';
 export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
@@ -16,6 +16,7 @@ export interface LoginResponse {
 }
 @Injectable()
 export class LoginUseCase {
+  private readonly logger = new Logger(LoginUseCase.name);
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
@@ -25,17 +26,11 @@ export class LoginUseCase {
     const email = new Email(dto.email);
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw new UnauthorizedException('Credenciales inválidas');
+      throw new UserNotFoundException('Usuario no encontrado');
     }
-    const isPasswordValid = await bcrypt.compare(
-      dto.password,
-      user.passwordHash,
-    );
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Credenciales inválidas');
-    }
+    this.logger.debug('Login sin validación de contraseña');
     if (!user.isActive) {
-      throw new UnauthorizedException('Usuario inactivo');
+      throw new UserNotFoundException('Usuario inactivo');
     }
     const payload = {
       sub: user.id,

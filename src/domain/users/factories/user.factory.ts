@@ -1,18 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { Email } from '../value-objects/email.vo';
-import { Password } from '../value-objects/password.vo';
 import { v4 as uuidv4 } from 'uuid';
-import * as bcrypt from 'bcryptjs';
 @Injectable()
 export class UserFactory {
   private readonly logger = new Logger(UserFactory.name);
-  async create(
-    email: string,
-    name: string,
-    lastName: string,
-    password: string,
-  ): Promise<User> {
+  async create(email: string, name: string, lastName: string): Promise<User> {
     this.logger.debug('Creando nuevo usuario con UserFactory', {
       email,
       name,
@@ -21,11 +14,7 @@ export class UserFactory {
     try {
       const emailVO = new Email(email);
       this.logger.debug('Email validado correctamente');
-      this.logger.debug('Hasheando contraseña...');
-      const hashedPassword = await bcrypt.hash(password, 10);
-      this.logger.debug('Contraseña hasheada correctamente');
-      const passwordVO = new Password(hashedPassword, true);
-      this.logger.debug('Password VO creado correctamente');
+
       const now = new Date();
       const userId = uuidv4();
       this.logger.debug('Creando instancia de User', {
@@ -39,7 +28,6 @@ export class UserFactory {
         emailVO.value,
         name,
         lastName,
-        passwordVO.value,
         now,
         now,
         true,
@@ -67,7 +55,6 @@ export class UserFactory {
     email: string;
     name: string;
     lastName: string;
-    passwordHash: string;
     createdAt: Date;
     updatedAt: Date;
     isActive: boolean;
@@ -84,7 +71,6 @@ export class UserFactory {
         data.email,
         data.name,
         data.lastName,
-        data.passwordHash,
         data.createdAt,
         data.updatedAt,
         data.isActive,

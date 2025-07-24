@@ -31,7 +31,6 @@ export class FirebaseUserRepository implements IUserRepository {
         email: data.email,
         name: data.name,
         lastName: data.lastName,
-        passwordHash: data.passwordHash,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
         isActive: data.isActive,
@@ -65,7 +64,6 @@ export class FirebaseUserRepository implements IUserRepository {
         email: data.email,
         name: data.name,
         lastName: data.lastName,
-        passwordHash: data.passwordHash,
         createdAt: data.createdAt.toDate(),
         updatedAt: data.updatedAt.toDate(),
         isActive: data.isActive,
@@ -89,15 +87,13 @@ export class FirebaseUserRepository implements IUserRepository {
         email: user.email,
         name: user.name,
         lastName: user.lastName,
-        passwordHash: user.passwordHash,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         isActive: user.isActive,
       };
 
-      // Filtrar campos undefined para evitar errores de Firestore
       const cleanUserData = Object.fromEntries(
-        Object.entries(userData).filter(([_, value]) => value !== undefined)
+        Object.entries(userData).filter(([_, value]) => value !== undefined),
       );
       this.logger.debug('Datos del usuario a guardar', {
         userId: user.id,
@@ -133,9 +129,16 @@ export class FirebaseUserRepository implements IUserRepository {
         isActive: user.isActive,
       };
 
-      // Filtrar campos undefined para evitar errores de Firestore
       const cleanUserData = Object.fromEntries(
-        Object.entries(userData).filter(([_, value]) => value !== undefined)
+        Object.entries(userData).filter(([key, value]) => {
+          if (value === undefined || value === null) {
+            this.logger.warn(
+              `Campo ${key} es ${value}, será excluido del guardado`,
+            );
+            return false;
+          }
+          return true;
+        }),
       );
 
       await this.firebaseService
@@ -186,7 +189,6 @@ export class FirebaseUserRepository implements IUserRepository {
           email: data.email,
           name: data.name,
           lastName: data.lastName,
-          passwordHash: data.passwordHash,
           createdAt: data.createdAt.toDate(),
           updatedAt: data.updatedAt.toDate(),
           isActive: data.isActive,

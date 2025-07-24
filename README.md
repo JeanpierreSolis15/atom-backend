@@ -12,7 +12,7 @@ Backend desarrollado con NestJS siguiendo principios de Clean Architecture y Dom
 
 ### Domain-Driven Design (DDD)
 - **Bounded Contexts**: Users, Auth, Tasks
-- **Value Objects**: Email, Password
+- **Value Objects**: Email
 - **Entities**: User, Task
 - **Factories**: UserFactory, TaskFactory
 - **Repositories**: Interfaces e implementaciones
@@ -208,7 +208,6 @@ pnpm run deploy:functions:prod
 ### Seguridad
 - JWT Authentication
 - Refresh Tokens
-- Password hashing (bcrypt)
 - Validación de datos
 
 ### Testing
