@@ -5,7 +5,7 @@ const express = require('express');
 
 require('dotenv').config();
 
-process.env.FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'atom-cddbd';
+process.env.PROJECT_ID = process.env.PROJECT_ID || process.env.FIREBASE_PROJECT_ID || 'atom-cddbd';
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 let AppModule;
