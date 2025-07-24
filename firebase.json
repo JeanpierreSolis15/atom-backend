@@ -3,6 +3,7 @@
     "source": ".",
     "runtime": "nodejs20",
     "codebase": "default",
+    "gen": 2,
     "ignore": [
       "node_modules",
       ".git",
