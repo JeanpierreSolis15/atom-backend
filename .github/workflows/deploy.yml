@@ -71,7 +71,10 @@ jobs:
         npm install
         
     - name: Copy build files to functions
-      run: cp -r dist functions/
+      run: |
+        cp -r dist functions/
+        ls -la functions/
+        ls -la functions/dist/
       
     - name: Setup environment variables
       run: |
