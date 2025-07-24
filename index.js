@@ -1,4 +1,4 @@
-const functions = require('firebase-functions');
+const { onRequest } = require('firebase-functions/v2/https');
 const { NestFactory } = require('@nestjs/core');
 const { ExpressAdapter } = require('@nestjs/platform-express');
 const express = require('express');
@@ -57,4 +57,4 @@ bootstrap().catch(error => {
   process.exit(1);
 });
 
-exports.api = functions.https.onRequest(server); 
+exports.api = onRequest(server); 
