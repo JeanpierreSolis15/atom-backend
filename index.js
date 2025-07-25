@@ -2,6 +2,7 @@ const { onRequest } = require('firebase-functions/v2/https');
 const { NestFactory } = require('@nestjs/core');
 const { ExpressAdapter } = require('@nestjs/platform-express');
 const express = require('express');
+const { SwaggerModule, DocumentBuilder } = require('@nestjs/swagger');
 
 require('dotenv').config();
 
@@ -25,7 +26,6 @@ try {
 
 const server = express();
 
-// Endpoint de prueba simple
 server.get('/test', (req, res) => {
   res.json({ 
     message: 'API funcionando correctamente',
@@ -52,6 +52,25 @@ async function bootstrap() {
 
     console.log('Setting global prefix...');
     app.setGlobalPrefix('api');
+
+    const config = new DocumentBuilder()
+      .setTitle('Atom Backend API')
+      .setDescription('Prueba técnica Atom - Backend con NestJS, Clean Architecture y DDD')
+      .setVersion('1.0')
+      .addBearerAuth(
+        {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          name: 'JWT',
+          description: 'Enter JWT token',
+          in: 'header',
+        },
+        'JWT-auth',
+      )
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document, server);
 
     console.log('Initializing application...');
     await app.init();
