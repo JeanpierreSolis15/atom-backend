@@ -145,24 +145,43 @@ Acceder a Swagger UI: `http://localhost:3000/api`
 
 ## 🚀 Despliegue
 
-El proyecto está configurado para despliegue automático en Firebase Cloud Functions.
+El proyecto está configurado con **despliegue automático** usando CI/CD. **No hay despliegue manual**.
 
-### Despliegue Automático
-- **Rama `develop`**: Desarrollo y testing
-- **Rama `master`**: Despliegue automático a producción
+### Flujo de Despliegue Automático
 
-### Despliegue Manual
-```bash
-# Despliegue a Firebase Cloud Functions
-pnpm run deploy:functions
-```
+1. **Desarrollo**: Crear rama de feature desde `develop`
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/nombre-de-tu-feature
+   ```
+
+2. **Merge a Develop**: Una vez completada la feature
+   ```bash
+   git checkout develop
+   git merge feature/nombre-de-tu-feature
+   git push origin develop
+   ```
+
+3. **Despliegue a Producción**: Merge de `develop` a `master`
+   ```bash
+   git checkout master
+   git merge develop
+   git push origin master
+   ```
+   ✅ **El despliegue a producción se ejecuta automáticamente**
+
+### Ramas del Proyecto
+- **`feature/*`**: Ramas de desarrollo de funcionalidades
+- **`develop`**: Rama de integración y testing
+- **`master`**: Rama de producción (despliegue automático)
 
 ### URL de Producción
 ```
 WAIT - NO URL
 ```
 
-📖 **Ver documentación completa**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+⚠️ **Importante**: No ejecutar comandos de despliegue manual. El sistema CI/CD se encarga automáticamente del despliegue cuando se hace merge a `master`.
 
 ## Comandos
 
