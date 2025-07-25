@@ -176,11 +176,6 @@ El proyecto está configurado con **despliegue automático** usando CI/CD. **No 
 - **`develop`**: Rama de integración y testing
 - **`master`**: Rama de producción (despliegue automático)
 
-### URL de Producción
-```
-WAIT - NO URL
-```
-
 ⚠️ **Importante**: No ejecutar comandos de despliegue manual. El sistema CI/CD se encarga automáticamente del despliegue cuando se hace merge a `master`.
 
 ## Comandos
@@ -257,10 +252,10 @@ de cobertura:
 ![Cobertura General 2](assets/image2.png)
 
 ### Métricas de Cobertura
-- **Statements**: >90%
-- **Branches**: >85%
-- **Functions**: >95%
-- **Lines**: >90%
+- **Statements**: 70.87%
+- **Branches**: 69.33%
+- **Functions**: 65.69%
+- **Lines**: 72.65%
 
 ### Tipos de Pruebas Implementadas
 - ✅ **Unit Tests**: Pruebas de dominio, value objects, factories
